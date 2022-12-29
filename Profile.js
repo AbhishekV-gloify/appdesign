@@ -41,7 +41,7 @@ const Profile = () => {
             </View>
           </View>
 
-          {/* <Text style={[styles.lizacarter, { marginTop: 10 }]}>Liza Carter</Text> */}
+          <Text style={[styles.lizacarter, { marginTop: 10 }]}>Liza Carter</Text>
 
           <View style={{ marginTop: 10, flexDirection: "row" }}>
             <TouchableOpacity style={{ paddingHorizontal: 10, paddingVertical: 5, marginHorizontal: 5, backgroundColor: "#1341b6", borderRadius: 5, elevation: 5, shadowColor: "black", shadowRadius: 5, shadowOffset: { width: 0, height: 2 }, }}>
