@@ -3,14 +3,14 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import Profile  from './Profile';
-
+import PersonalDetails from './src/assets/Files/PersonalDetails'
+import Notification  from './src/assets/Files/Notification';
 
 
 const App = () => {
   
   return (
-    <Profile />
+    <Notification/>
   );
 };
 
