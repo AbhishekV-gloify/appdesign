@@ -222,43 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
 
-  hexagon: {
-    width: 100,
-    height: 55,
-  },
-  hexagonInner: {
-    width: 70,
-    height: 45,
-    backgroundColor: "#1341b6",
-  },
-  hexagonAfter: {
-    position: "absolute",
-    bottom: -10,
-    left: 0,
-    width: 0,
-    height: 0,
-    borderStyle: "solid",
-    borderLeftWidth: 35,
-    borderLeftColor: "transparent",
-    borderRightWidth: 35,
-    borderRightColor: "transparent",
-    borderTopWidth: 20,
-    borderTopColor: "#1341b6",
-  },
-  hexagonBefore: {
-    position: "absolute",
-    top: -25,
-    left: 0,
-    width: 0,
-    height: 0,
-    borderStyle: "solid",
-    borderLeftWidth: 35,
-    borderLeftColor: "transparent",
-    borderRightWidth: 35,
-    borderRightColor: "transparent",
-    borderBottomWidth: 25,
-    borderBottomColor: "#1341b6",
-  },
+  
 });
 
 export default Profile

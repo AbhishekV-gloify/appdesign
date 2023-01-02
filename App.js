@@ -10,7 +10,7 @@ import Notification  from './src/assets/Files/Notification';
 const App = () => {
   
   return (
-    <Notification/>
+    <PersonalDetails/>
   );
 };
 
