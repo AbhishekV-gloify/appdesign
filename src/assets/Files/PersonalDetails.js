@@ -3,7 +3,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import Icon3 from 'react-native-vector-icons/Ionicons';
 import Icon_Entypo from 'react-native-vector-icons/Entypo';
-import Icon_AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {
     StyleSheet,
@@ -11,8 +10,7 @@ import {
     TextInput,
     View,
     ScrollView,
-    TouchableOpacity,
-    Pressable
+    TouchableOpacity
 } from 'react-native';
 
 const SimpleEdittext = ({ label, value, required, calendarIcon, setValue }) => {
@@ -28,7 +26,6 @@ const SimpleEdittext = ({ label, value, required, calendarIcon, setValue }) => {
 
                 <View style={styles.blackBorder}>
                     <TextInput style={styles.inputText} placeholder={value} onChangeText={(value) => setValue({ value })}>
-
                     </TextInput>
                 </View>
             </View>
@@ -70,21 +67,62 @@ const SimpleEdittext = ({ label, value, required, calendarIcon, setValue }) => {
     }
 }
 
-const AddDetails = (Degree_label, Degree, middle_field, value_middle_field, year_label, year) => {
-    return (
-        <View>
-            <View style={styles.sep} />
-            <TouchableOpacity>
-                <Icon_AntDesign name='delete' size={10} color='white' style={{ flex: 1, alignSelf: 'flex-end', marginEnd: 20, marginTop: 10, marginBottom: -15, borderRadius: 20, backgroundColor: 'red', padding: 10 }} />
-            </TouchableOpacity>
-            <SimpleEdittext label={Degree_label} value={Degree} required={true} calendarIcon={false} />
-            <SimpleEdittext label={middle_field} value={value_middle_field} required={true} calendarIcon={false} />
-            <SimpleEdittext label={year_label} value={year} required={true} calendarIcon={true} />
-        </View>
-    )
+const EducationalEdittext = ({ label, value, required, calendarIcon, setValue }) => {
+
+    if (required == false) {
+        return (
+            <View style={styles.topMargin}>
+                <View style={styles.labelBg}>
+                    <Text style={styles.labeltext}>
+                        {label}
+                    </Text>
+                </View>
+
+                <View style={styles.blackBorder}>
+                    <TextInput style={styles.inputText} placeholder={value} onChangeText={(value) => setValue({ value })}>
+                    </TextInput>
+                </View>
+            </View>
+        );
+    }
+    else if ((required == true) && (calendarIcon == false)) {
+        return (
+            <View style={styles.topMargin}>
+                <View style={styles.labelBg}>
+                    <Text style={styles.labeltext}>
+                        {label}
+                    </Text>
+                    <Text style={{ color: "red" }}>*</Text>
+                </View>
+
+                <View style={styles.blackBorder}>
+                    <TextInput style={styles.inputText} onChangeText={(value) => setValue({ value })} placeholder={value}>
+                    </TextInput>
+                </View>
+            </View>
+        );
+    } else if ((required == true) && (calendarIcon == true)) {
+        return (
+            <View style={styles.topMargin}>
+                <View style={{ flexDirection: "row", paddingVertical: 2, paddingHorizontal: 8, position: "absolute", zIndex: 0, marginLeft: 30, width: "auto", backgroundColor: "white" }}>
+                    <Text style={{ color: "black", opacity: 0.4, alignItems: "center", fontSize: 16, lineHeight: 19, fontWeight: '400' }}>
+                        {label}
+                    </Text>
+                    <Text style={{ color: "red" }}>*</Text>
+                </View>
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between", borderWidth: 1, borderColor: 'gray', marginTop: 12, zIndex: -1, marginHorizontal: 20, borderRadius: 7 }}>
+                    <TextInput style={{ color: "gray", paddingLeft: 20 }} placeholder={value} onChangeText={(value) => setValue({ value })}>
+                    </TextInput>
+                    <Icon name='calendar-blank-outline' size={23} color='#247470' style={{ marginRight: 20, alignSelf: "center" }} />
+                </View>
+            </View>
+        );
+    }
 }
 
-const PersonalDetails = () => {
+
+const PersonalDetails = ({navigation}) => {
     const [addMoreEdu, setAddMoreEdu] = useState(false);
     const [addMoreReg, setAddMoreReg] = useState(false);
     const [isNameAdded, setIsNameAdded] = useState('');
@@ -102,26 +140,50 @@ const PersonalDetails = () => {
     const [country, setCountry] = useState('');
     const [speciality, setSpeciality] = useState('');
     const [practising, setPractising] = useState('');
-    const [educationData, setEducationData] = useState([])
+    const [educationData, setEducationData] = useState([{
+        degree: '',
+        college: '',
+        year: ''
+    }])
+    const [eduInput, setEduInput] = useState([{
+        degree: '',
+        college: '',
+        year: ''
+    }])
+    const [regInput, setRegInput] = useState([{
+        regDetail: '',
+        council: '',
+        year: ''
+    }])
 
 
+    const handleInputChange = (e, index) => {
+        const { degree, college, year } = e.target;
+        const list = [...eduInput];
+        list[index][degree] = value;
+        setEduInput(list);
+    }
 
+    const handleRegInputChange = (e, index) => {
+        const { regDetail, council, year } = e.target;
+        const list2 = [...regInput];
+        list2[index][regDetail] = value;
+        setRegInput(list2);
+    }
 
+    const handleRegClick = () => {
+        setRegInput([...regInput, { regDetail: '', council: '', year: '' }])
+    }
 
-    // const ChangeGenderBackground = () => {
-    //     return (
-    //         <TouchableOpacity style={[styles.genderBtnSelected, { marginLeft: '5%' }]} onPress={() => { setGender('Male'), setIsGenderSelected(true) }}>
-    //             <Icon3 name='male' size={20} color='black' />
-    //             <Text style={{ color: 'black', marginLeft: 5 }}>Male</Text>
-    //         </TouchableOpacity>
-    //     )
-    // }
+    const handleclick = () => {
+        setEduInput([...eduInput, { degree: '', college: '', year: '' }])
+    }
 
     return (
         <View style={{ backgroundColor: "white", flex: 1 }}>
             <Icon name='arrow-left' size={30} color='#000' style={{ marginTop: 20, marginLeft: 10 }} />
             <Text style={{ marginTop: 20, marginStart: 15, fontSize: 20, fontWeight: "700", color: 'black' }}>Personal Details</Text>
-            {console.log(isNameAdded)}
+            
             <ScrollView>
 
                 <SimpleEdittext label='First Name' value='Vikas' required={false} calendarIcon={false} setValue={setIsNameAdded} />
@@ -152,7 +214,7 @@ const PersonalDetails = () => {
                     </View>
                 </View>
 
-
+                {console.log({isNameAdded}, {lastName}, {email})}
                 <SimpleEdittext label='Date of Birth' value='DD / MM / YY' required={true} calendarIcon={true} setValue={setDob} />
 
 
@@ -229,18 +291,18 @@ const PersonalDetails = () => {
 
                 <View style={styles.bigbox}>
                     <Text style={styles.educational_text}>Education Qualification</Text>
+                    {eduInput.map((x, i) => {
+                        return (
+                            <View>
+                                <View style={styles.sep} />
+                                <EducationalEdittext label='Enter Degree' value='Select Degree' required={true} calendarIcon={false} setValue={setEducationData} />
+                                <EducationalEdittext label='College/University' value='Select College/University' required={true} calendarIcon={false} setValue={setEducationData} />
+                                <EducationalEdittext label='Degree Year' value='MM / YYYY' required={true} calendarIcon={true} setValue={setEducationData} />
+                            </View>
+                        );
+                    })}
 
-                    <SimpleEdittext label='Enter Degree' value='Select Degree' required={true} calendarIcon={false} />
-                    <SimpleEdittext label='College/University' value='Select College/University' required={true} calendarIcon={false} />
-                    <SimpleEdittext label='Degree Year' value='MM / YYYY' required={true} calendarIcon={true} />
-
-                    {addMoreEdu ? AddDetails(Degree_label = 'Enter Degree', Degree = 'Select Degree', value_middle_field = 'Select College/University', middle_field = 'College/University', year_label = 'Degree Year', year = 'MM / YYYY') : null}
-
-
-                    {/* --------------------------------------yaha par onpress me setaddmoreedu ko true krna hai --------------------------------------------------------------------------------------------- */}
-
-
-                    <TouchableOpacity onPress={() => { setAddMoreEdu(true) }} style={styles.addmoreBtn}>
+                    <TouchableOpacity onPress={() => { handleclick() }} style={styles.addmoreBtn}>
                         <Icon_Entypo name='plus' color='white' size={15} style={{ backgroundColor: "#247470", borderRadius: 12, alignSelf: "center", padding: 4 }} />
                         <Text style={{ alignSelf: 'center', fontSize: 12, lineHeight: 18, marginLeft: 10, color: '#247470' }}>Add more</Text>
                     </TouchableOpacity>
@@ -251,28 +313,29 @@ const PersonalDetails = () => {
                 <View style={{ borderWidth: 1, borderColor: 'gray', marginTop: 15, marginHorizontal: 10, borderRadius: 6 }}>
                     <Text style={{ color: "black", alignItems: "center", fontSize: 16, lineHeight: 19, fontWeight: '400', marginTop: 7, marginLeft: 10 }}>Registration Details</Text>
 
+                    {regInput.map((x, i) => {
+                        return (
+                            <View>
+                                <View style={styles.sep} />
+                                <EducationalEdittext label='Enter Registration Detail' value='1234-5678-90' required={true} calendarIcon={false} setValue={setEducationData} />
+                                <EducationalEdittext label='Council' value='Select Council' required={false} calendarIcon={false} setValue={setEducationData} />
+                                <EducationalEdittext label='Year' value='YYYY' required={true} calendarIcon={true} setValue={setEducationData} />
+                            </View>
+                        );
+                    })}
 
-                    <SimpleEdittext label='Enter Registration Detail' value='1234-5678-90' required={true} calendarIcon={false} />
-                    <SimpleEdittext label='Council' value='Select Council' required={false} calendarIcon={false} />
-                    <SimpleEdittext label='Year' value='YYYY' required={true} calendarIcon={true} style={{ marginTop: 20 }} />
 
-                    {addMoreReg ? AddDetails(Degree_label = 'Enter Registration Details', Degree = '1234-5678-90', value_middle_field = 'Council', middle_field = 'Select Council', year_label = 'Year', year = 'YYYY') : null}
-
-                    <TouchableOpacity onPress={() => setAddMoreReg(true)} style={styles.addmoreBtn}>
+                    <TouchableOpacity onPress={() => handleRegClick()} style={styles.addmoreBtn}>
                         <Icon_Entypo name='plus' color='white' size={15} style={{ backgroundColor: "#247470", borderRadius: 12, alignSelf: "center", padding: 4 }} />
                         <Text style={{ alignSelf: 'center', fontSize: 12, lineHeight: 18, marginLeft: 10, color: '#247470' }}>Add more</Text>
                     </TouchableOpacity>
                 </View>
 
 
-                <SimpleEdittext label='Speciality' value='' required={true} calendarIcon={false} onChangeText={(value) => setValue({ setSpeciality })} />
+                <SimpleEdittext label='Speciality' value='' required={true} calendarIcon={false} setValue={setSpeciality} />
+                <SimpleEdittext label='Practising Since' valudatae='MM / YYYY' required={true} calendarIcon={false} setValue={setPractising} />
 
-                <SimpleEdittext label='Practising Since' value='MM / YYYY' required={true} calendarIcon={false} onChangeText={(value) => setValue({ setPractising })} />
-
-
-
-
-                <TouchableOpacity style={styles.nextButton}>
+                <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate('data', {name : `${isNameAdded}`, lname : `${lastName}`, mno: `${mobileNo}`, email:`${email}`})}>
                     <Text style={styles.white}>Next</Text>
                 </TouchableOpacity>
 
