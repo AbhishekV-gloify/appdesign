@@ -13,116 +13,40 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-const SimpleEdittext = ({ label, value, required, calendarIcon, setValue }) => {
+const SimpleEdittext = ({ label, value, required, setValue, rightIcon, enabled , data}) => {
 
-    if (required == false) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={styles.labelBg}>
-                    <Text style={styles.labeltext}>
-                        {label}
-                    </Text>
-                </View>
-
-                <View style={styles.blackBorder}>
-                    <TextInput style={styles.inputText} placeholder={value} onChangeText={(value) => setValue({ value })}>
-                    </TextInput>
-                </View>
+    // if (required == false) {
+    return (
+        <View style={styles.topMargin}>
+            <View style={styles.labelBg}>
+                <Text style={styles.labeltext}>
+                    {label}
+                </Text>
+                {required && <Text style={{ color: "red" }}>*</Text>}
             </View>
-        );
-    }
-    else if ((required == true) && (calendarIcon == false)) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={styles.labelBg}>
-                    <Text style={styles.labeltext}>
-                        {label}
-                    </Text>
-                    <Text style={{ color: "red" }}>*</Text>
-                </View>
 
-                <View style={styles.blackBorder}>
-                    <TextInput style={styles.inputText} onChangeText={(value) => setValue({ value })} placeholder={value}>
-                    </TextInput>
-                </View>
+            <View style={[styles.blackBorder, { flexDirection: 'row', justifyContent: 'space-between' }]}>
+                <TextInput
+                    style={styles.inputText}
+                    placeholder={value}
+                    onChangeText={(value) => setValue(value)}
+                    editable={enabled}
+                    value={data}
+                />
+                {rightIcon &&
+                    <Icon
+                        name={rightIcon}
+                        size={23}
+                        color='#247470'
+                        style={{ marginRight: 20, alignSelf: "center" }}
+                    />
+                }
             </View>
-        );
-    } else if ((required == true) && (calendarIcon == true)) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={{ flexDirection: "row", paddingVertical: 2, paddingHorizontal: 8, position: "absolute", zIndex: 0, marginLeft: 30, width: "auto", backgroundColor: "white" }}>
-                    <Text style={{ color: "black", opacity: 0.4, alignItems: "center", fontSize: 16, lineHeight: 19, fontWeight: '400' }}>
-                        {label}
-                    </Text>
-                    <Text style={{ color: "red" }}>*</Text>
-                </View>
-
-                <View style={{ flexDirection: "row", justifyContent: "space-between", borderWidth: 1, borderColor: 'gray', marginTop: 12, zIndex: -1, marginHorizontal: 20, borderRadius: 7 }}>
-                    <TextInput style={{ color: "gray", paddingLeft: 20 }} placeholder={value} onChangeText={(value) => setValue({ value })}>
-                    </TextInput>
-                    <Icon name='calendar-blank-outline' size={23} color='#247470' style={{ marginRight: 20, alignSelf: "center" }} />
-                </View>
-            </View>
-        );
-    }
+        </View>
+    );
 }
 
-const EducationalEdittext = ({ label, value, required, calendarIcon, setValue }) => {
-
-    if (required == false) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={styles.labelBg}>
-                    <Text style={styles.labeltext}>
-                        {label}
-                    </Text>
-                </View>
-
-                <View style={styles.blackBorder}>
-                    <TextInput style={styles.inputText} placeholder={value} onChangeText={(value) => setValue({ value })}>
-                    </TextInput>
-                </View>
-            </View>
-        );
-    }
-    else if ((required == true) && (calendarIcon == false)) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={styles.labelBg}>
-                    <Text style={styles.labeltext}>
-                        {label}
-                    </Text>
-                    <Text style={{ color: "red" }}>*</Text>
-                </View>
-
-                <View style={styles.blackBorder}>
-                    <TextInput style={styles.inputText} onChangeText={(value) => setValue({ value })} placeholder={value}>
-                    </TextInput>
-                </View>
-            </View>
-        );
-    } else if ((required == true) && (calendarIcon == true)) {
-        return (
-            <View style={styles.topMargin}>
-                <View style={{ flexDirection: "row", paddingVertical: 2, paddingHorizontal: 8, position: "absolute", zIndex: 0, marginLeft: 30, width: "auto", backgroundColor: "white" }}>
-                    <Text style={{ color: "black", opacity: 0.4, alignItems: "center", fontSize: 16, lineHeight: 19, fontWeight: '400' }}>
-                        {label}
-                    </Text>
-                    <Text style={{ color: "red" }}>*</Text>
-                </View>
-
-                <View style={{ flexDirection: "row", justifyContent: "space-between", borderWidth: 1, borderColor: 'gray', marginTop: 12, zIndex: -1, marginHorizontal: 20, borderRadius: 7 }}>
-                    <TextInput style={{ color: "gray", paddingLeft: 20 }} placeholder={value} onChangeText={(value) => setValue({ value })}>
-                    </TextInput>
-                    <Icon name='calendar-blank-outline' size={23} color='#247470' style={{ marginRight: 20, alignSelf: "center" }} />
-                </View>
-            </View>
-        );
-    }
-}
-
-
-const PersonalDetails = ({navigation}) => {
+const PersonalDetails = ({ navigation , route}) => {
     const [addMoreEdu, setAddMoreEdu] = useState(false);
     const [addMoreReg, setAddMoreReg] = useState(false);
     const [isNameAdded, setIsNameAdded] = useState('');
@@ -156,6 +80,10 @@ const PersonalDetails = ({navigation}) => {
         year: ''
     }])
 
+    const dataObject = { isNameAdded, lastName, mobileNo, email }
+    
+    // const { data2} = route?.params
+console.log("qwertioiuhgfd  :::: ", route?.params?.dta1)
 
     const handleInputChange = (e, index) => {
         const { degree, college, year } = e.target;
@@ -183,13 +111,13 @@ const PersonalDetails = ({navigation}) => {
         <View style={{ backgroundColor: "white", flex: 1 }}>
             <Icon name='arrow-left' size={30} color='#000' style={{ marginTop: 20, marginLeft: 10 }} />
             <Text style={{ marginTop: 20, marginStart: 15, fontSize: 20, fontWeight: "700", color: 'black' }}>Personal Details</Text>
-            
+
             <ScrollView>
 
-                <SimpleEdittext label='First Name' value='Vikas' required={false} calendarIcon={false} setValue={setIsNameAdded} />
-                <SimpleEdittext label='Last Name' value='Gloify' required={false} calendarIcon={false} setValue={setLastName} />
-                <SimpleEdittext label='Mobile No' value='9916476600' required={false} calendarIcon={false} setValue={setMobileNo} />
-                <SimpleEdittext label='Email' value='vikas@goify.com' required={false} calendarIcon={false} setValue={setEmail} />
+                <SimpleEdittext label='First Name' value='Vikas' setValue={setIsNameAdded} />
+                <SimpleEdittext label='Last Name' value='Gloify' setValue={setLastName} />
+                <SimpleEdittext label='Mobile No' value='9916476600' setValue={setMobileNo} />
+                <SimpleEdittext label='Email' value='vikas@goify.com' setValue={setEmail} />
 
 
                 <View style={{
@@ -214,8 +142,11 @@ const PersonalDetails = ({navigation}) => {
                     </View>
                 </View>
 
-                {console.log({isNameAdded}, {lastName}, {email})}
-                <SimpleEdittext label='Date of Birth' value='DD / MM / YY' required={true} calendarIcon={true} setValue={setDob} />
+                {console.log({ isNameAdded }, { lastName }, { email })}
+                <SimpleEdittext
+                    label='Date of Birth' value='DD / MM / YY' required={true} setValue={setDob}
+                    rightIcon={"calendar-blank-outline"}
+                />
 
 
 
@@ -244,9 +175,9 @@ const PersonalDetails = ({navigation}) => {
                 {/* {isGenderSelected ? ChangeGenderBackground() : null} */}
 
 
-                <SimpleEdittext label='Address' value='' required={true} calendarIcon={false} setValue={setAddress} />
-                <SimpleEdittext label='Landmark' value='' required={false} calendarIcon={false} setValue={setLandmark} />
-                <SimpleEdittext label='Locality' value='' required={true} calendarIcon={false} setValue={setLocaity} />
+                <SimpleEdittext label='Address' value='' required={true} setValue={setAddress} />
+                <SimpleEdittext label='Landmark' value='' required={false} setValue={setLandmark} />
+                <SimpleEdittext label='Locality' value='' required={true} setValue={setLocaity} />
 
 
                 <View style={{ flexDirection: "row" }}>
@@ -285,8 +216,8 @@ const PersonalDetails = ({navigation}) => {
 
                 </View>
 
-                <SimpleEdittext label='State' value='' required={true} calendarIcon={false} onChangeText={(value) => setValue({ setState })} />
-                <SimpleEdittext label='Country' value='' required={true} calendarIcon={false} onChangeText={(value) => setValue({ setCountry })} />
+                <SimpleEdittext label='State' value='' required={true} onChangeText={(value) => setValue({ setState })} />
+                <SimpleEdittext label='Country' value='' required={true} onChangeText={(value) => setValue({ setCountry })} />
 
 
                 <View style={styles.bigbox}>
@@ -295,9 +226,9 @@ const PersonalDetails = ({navigation}) => {
                         return (
                             <View>
                                 <View style={styles.sep} />
-                                <EducationalEdittext label='Enter Degree' value='Select Degree' required={true} calendarIcon={false} setValue={setEducationData} />
-                                <EducationalEdittext label='College/University' value='Select College/University' required={true} calendarIcon={false} setValue={setEducationData} />
-                                <EducationalEdittext label='Degree Year' value='MM / YYYY' required={true} calendarIcon={true} setValue={setEducationData} />
+                                <SimpleEdittext label='Enter Degree' value='Select Degree' required={true} setValue={setEducationData} />
+                                <SimpleEdittext label='College/University' value='Select College/University' required={true} setValue={setEducationData} />
+                                <SimpleEdittext label='Degree Year' value='MM / YYYY' required={true} setValue={setEducationData} rightIcon={"calendar-blank-outline"} />
                             </View>
                         );
                     })}
@@ -317,9 +248,9 @@ const PersonalDetails = ({navigation}) => {
                         return (
                             <View>
                                 <View style={styles.sep} />
-                                <EducationalEdittext label='Enter Registration Detail' value='1234-5678-90' required={true} calendarIcon={false} setValue={setEducationData} />
-                                <EducationalEdittext label='Council' value='Select Council' required={false} calendarIcon={false} setValue={setEducationData} />
-                                <EducationalEdittext label='Year' value='YYYY' required={true} calendarIcon={true} setValue={setEducationData} />
+                                <SimpleEdittext label='Enter Registration Detail' value='1234-5678-90' required={true} setValue={setEducationData} />
+                                <SimpleEdittext label='Council' value='Select Council' required={false} setValue={setEducationData} />
+                                <SimpleEdittext label='Year' value='YYYY' required={false} setValue={setEducationData} rightIcon={"calendar-blank-outline"} />
                             </View>
                         );
                     })}
@@ -332,10 +263,14 @@ const PersonalDetails = ({navigation}) => {
                 </View>
 
 
-                <SimpleEdittext label='Speciality' value='' required={true} calendarIcon={false} setValue={setSpeciality} />
-                <SimpleEdittext label='Practising Since' valudatae='MM / YYYY' required={true} calendarIcon={false} setValue={setPractising} />
+                <SimpleEdittext label='Speciality' value='' required={true} setValue={setSpeciality} />
+                <SimpleEdittext label='Practising Since' value='MM / YYYY' required={true} setValue={setPractising} />
 
-                <TouchableOpacity style={styles.nextButton} onPress={()=>navigation.navigate('data', {name : `${isNameAdded}`, lname : `${lastName}`, mno: `${mobileNo}`, email:`${email}`})}>
+                <SimpleEdittext label='display data' value='' required={false} enabled={false} data={route?.params?.dta1}/>
+                <SimpleEdittext label='display data2' value='' required={false} enabled={false} data={route?.params?.data2}/>
+
+
+                <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('data', { data: dataObject })}>
                     <Text style={styles.white}>Next</Text>
                 </TouchableOpacity>
 
@@ -404,6 +339,7 @@ const styles = StyleSheet.create({
     },
 
     inputText: {
+        flex: 1,
         color: "gray",
         paddingLeft: 20
     },

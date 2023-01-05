@@ -7,7 +7,7 @@ import PersonalData from './src/assets/Files/PersonalData'
 import PersonalDetails from './src/assets/Files/PersonalDetails'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import Tabs from './src/assets/Files/TabNavigate'
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -17,6 +17,7 @@ const App = () => {
       <Stack.Navigator initialRouteName='register' >
         <Stack.Screen options={{headerShown: false}} name="register" component={PersonalDetails} />
         <Stack.Screen options={{headerShown: false}} name="data" component={PersonalData}/>
+        <Stack.Screen options={{headerShown: false}} name= "navigation" component={Tabs}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
