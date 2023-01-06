@@ -5,7 +5,6 @@ import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PersonalDetails from "./PersonalDetails";
 import Notification from "./Notification";
-import TabNavigate from "./TabNavigate"
 
 const SimpleEdittext = ({ label, value, setValue }) => {
 
@@ -37,12 +36,18 @@ const PersonalData = ({ route, navigation }) => {
     const [data1, setData1] = useState('');
     const [data2, setData2] = useState('');
 
-
+    
 
 
     return (
+        <View style={styles.container}>
+
+
+
+
+
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView style={{marginTop:40}}>
                     <View style={styles.greenborder2}>
                         <View style={styles.lightGreen}>
                             <Icon2 name='done' size={26} color='white' style={styles.iconBg} />
@@ -65,12 +70,14 @@ const PersonalData = ({ route, navigation }) => {
 
 
 
-                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('navigation')}>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('patientData', { dta1: data1, data2: data2 })}>
                             <Text style={{ color: 'white' }}>Next</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
+
+        </View>
     )
 }
 

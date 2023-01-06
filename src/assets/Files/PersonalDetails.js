@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import Icon3 from 'react-native-vector-icons/Ionicons';
@@ -12,12 +12,24 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
+import { getLists } from './JsonData';
 
-const SimpleEdittext = ({ label, value, required, setValue, rightIcon, enabled , data}) => {
+const SimpleEdittext = ({ label, value, required, setValue, rightIcon, enabled, data }) => {
+
+
+    useEffect(() => {
+        getListData()
+    }, [])
+
+    const getListData = async() =>   {
+        await getLists()
+    }
 
     // if (required == false) {
     return (
+
         <View style={styles.topMargin}>
+
             <View style={styles.labelBg}>
                 <Text style={styles.labeltext}>
                     {label}
@@ -46,7 +58,7 @@ const SimpleEdittext = ({ label, value, required, setValue, rightIcon, enabled ,
     );
 }
 
-const PersonalDetails = ({ navigation , route}) => {
+const PersonalDetails = ({ navigation, route }) => {
     const [addMoreEdu, setAddMoreEdu] = useState(false);
     const [addMoreReg, setAddMoreReg] = useState(false);
     const [isNameAdded, setIsNameAdded] = useState('');
@@ -80,10 +92,12 @@ const PersonalDetails = ({ navigation , route}) => {
         year: ''
     }])
 
-    const dataObject = { isNameAdded, lastName, mobileNo, email }
     
+
+    const dataObject = { isNameAdded, lastName, mobileNo, email }
+
     // const { data2} = route?.params
-console.log("qwertioiuhgfd  :::: ", route?.params?.dta1)
+    console.log("qwertioiuhgfd  :::: ", route?.params?.dta1)
 
     const handleInputChange = (e, index) => {
         const { degree, college, year } = e.target;
@@ -266,8 +280,8 @@ console.log("qwertioiuhgfd  :::: ", route?.params?.dta1)
                 <SimpleEdittext label='Speciality' value='' required={true} setValue={setSpeciality} />
                 <SimpleEdittext label='Practising Since' value='MM / YYYY' required={true} setValue={setPractising} />
 
-                <SimpleEdittext label='display data' value='' required={false} enabled={false} data={route?.params?.dta1}/>
-                <SimpleEdittext label='display data2' value='' required={false} enabled={false} data={route?.params?.data2}/>
+                <SimpleEdittext label='display data' value='' required={false} enabled={false} data={route?.params?.dta1} />
+                <SimpleEdittext label='display data2' value='' required={false} enabled={false} data={route?.params?.data2} />
 
 
                 <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('data', { data: dataObject })}>

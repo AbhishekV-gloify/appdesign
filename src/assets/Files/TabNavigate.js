@@ -1,43 +1,35 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import React from "react";
+import {Image} from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Icon2 from 'react-native-vector-icons/Ionicons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from "./PersonalDetails";
-import SettingsScreen from "./Notification";
-// import { createAppContainer } from "@react-navigation/native";
+import SettingsScreen from "./PatientData";
+
 const Tab = createMaterialTopTabNavigator();
 
 const MyTabs = () => {
     return (
-        <Tab.Navigator screenOptions={{
-            tabBarLabelStyle: { fontSize: 12 },
-            tabBarItemStyle: { width: 100 },
-            tabBarStyle: { backgroundColor: 'powderblue' },
-
-        }} tabBarOptions={{
-            showIcon: true,
-            activeTintColor: "tomato",
-            inactiveTintColor: "gray",
-            labelStyle: {
-                fontSize: 12,
-                padding: 10,
-            },
-        }}>
+        <Tab.Navigator
+            tabBarOptions={{
+                style: {
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    elevation: 0,
+                },
+            }}>
             <Tab.Screen
                 name="Home"
                 component={HomeScreen}
                 options={{
                     tabBarIcon:
-                        (tabInfo) => (<MaterialIcons
-                            name="home"
-                            size={25}
-                            color={tabInfo.tintColor} />),
+                        (tabInfo) => (<Image source={require('../images/Vector.png')} />),
                     tabBarShowLabel: false,
-                    tabBarIndicatorStyle: {
+                    tabBarIndicatorStyle:  {
                         backgroundColor: 'transparent',
                     }
-
                 }} />
             <Tab.Screen
                 name="Settings"
@@ -56,60 +48,4 @@ const MyTabs = () => {
         </Tab.Navigator>
     );
 }
-
-
-// const Tabs = ()=> createMaterialTopTabNavigator({
-//     Home: {
-//         screen : Home,
-//         navigationOptions : {
-//             tabBarLabel : ({}) => {
-//                 <View>
-//                     <Icon2 name="ios-home" color="#fff" size={22}/>
-//                     <Text style = {{color:'#fff'}}>home</Text>
-//                 </View>
-//             }
-//         }
-//     },
-
-//     Setting : {
-//         screen : Setting,
-//         navigationOptions : {
-//             tabBarLabel : ({}) => {
-//                 <View>
-//                     <Icon2 name="ios-home" color="#fff" size={22}/>
-//                     <Text style = {{color:'#fff'}}>Setting</Text>
-//                 </View>
-//             }
-//         }
-//     }
-// },
-// {
-//     initialRouteName : "Home",
-//     lazyLoad : true,
-//     tabBarPosition : "top",
-//     swipeEnabled : true,
-//     tabBarOptions : {
-//         style : {
-//             height : 60,
-//             backgroundColor : "#2b2b39",
-//             paddingBottom : 3,
-//             paddingTop : 3,
-//         },
-//         activeTintColor : "#fff",
-//         inactiveTintColor : "gray",
-//     }
-// });
-
-// const MainScreenNavigator = createMaterialTopTabNavigator({
-//     Tabs: {
-//         screen : Tabs,
-//         navigationOptions : {
-//             title : 'My App',
-//             headerStyle : {
-//                 backgroundColor : '#2b2b39'
-//             }
-//         }
-//     }
-// })
-
 export default MyTabs;
