@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { Text, StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PersonalDetails from "./PersonalDetails";
 import Notification from "./Notification";
+import { useScrollToTop, useNavigation, useRoute, useNavigationState, useFocusEffect , useIsFocused} from '@react-navigation/native';
+
+
 
 const SimpleEdittext = ({ label, value, setValue }) => {
-
-    // if (required == false) {
     return (
         <View style={styles.topMargin}>
             <View style={styles.labelBg}>
@@ -35,17 +36,19 @@ const PersonalData = ({ route, navigation }) => {
 
     const [data1, setData1] = useState('');
     const [data2, setData2] = useState('');
+    const [count, setCount] = useState(0);
+    const [click, setClick] = useState(0)
+
+    useEffect(()=>{
+        console.warn("count:",count,click)
+        
+    },[count])
 
     
 
 
     return (
         <View style={styles.container}>
-
-
-
-
-
             <View style={styles.container}>
                 <ScrollView style={{marginTop:40}}>
                     <View style={styles.greenborder2}>
@@ -67,10 +70,13 @@ const PersonalData = ({ route, navigation }) => {
 
                         <SimpleEdittext label={'Enter data'} setValue={setData1} />
                         <SimpleEdittext label={'Enter data2'} setValue={setData2} />
+                        <Text>{count} , {click}</Text>
 
+                        <TouchableOpacity style={styles.button} onPress={() => {setClick(click+1) ,setCount(count+1)}}>
+                            <Text style={{ color: 'white' }}>count</Text>
+                        </TouchableOpacity>
 
-
-                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('patientData', { dta1: data1, data2: data2 })}>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('All Patients', { dta1: data1, data2: data2 })}>
                             <Text style={{ color: 'white' }}>Next</Text>
                         </TouchableOpacity>
                     </View>
