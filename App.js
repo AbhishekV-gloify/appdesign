@@ -3,13 +3,13 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import PersonalData from './src/assets/Files/PersonalData'
-import PersonalDetails from './src/assets/Files/PersonalDetails'
+import PersonalData from './src/Files/PersonalData'
+import PersonalDetails from './src/Files/PersonalDetails'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Tabs from './src/assets/Files/TabNavigate'
-import PatientData from './src/assets/Files/PatientData';
-import Category from './src/assets/Files/Category';
+import Tabs from './src/Files/TabNavigate'
+import PatientData from './src/Files/PatientData';
+import Category from './src/Files/Category';
 
 const App = () => {
   const Stack = createNativeStackNavigator();

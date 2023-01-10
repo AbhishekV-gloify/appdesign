@@ -25,7 +25,7 @@ const MyTabs = () => {
                 component={HomeScreen}
                 options={{
                     tabBarIcon:
-                        (tabInfo) => (<Image source={require('../images/Vector.png')} />),
+                        (tabInfo) => (<Image source={require('../assets/images/Vector.png')} />),
                     tabBarShowLabel: false,
                     tabBarIndicatorStyle:  {
                         backgroundColor: 'transparent',

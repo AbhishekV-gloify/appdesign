@@ -92,7 +92,7 @@ const Notification = () => {
                         return (
                             <View style={styles.horizontalFlex}>
                                 <Image
-                                    source={require("../../paul.png")}
+                                    source={require("../paul.png")}
                                     style={styles.imagelogo} />
                                 <View style={styles.verticalTexts}>
                                     <View style={[styles.horizontalFlex, styles.separateBetween]}>
